@@ -80,11 +80,13 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-
-              new Image.asset(
-                  picture
-
+              new Padding(
+                padding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 3.0),
+                child:new Image.asset(
+                    picture
+                ),
               ),
+
 //            new Text(
 //              'Try this out:',
 //              style: new TextStyle(
