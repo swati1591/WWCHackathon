@@ -48,10 +48,13 @@ class _MyHomePageState extends State<MyHomePage> {
   
   List<CheckboxListTile> myInterests = [];
   String activity = "Click the hot tub to generate a random activity";
+  String picture = 'assets/press_button.gif';
   void chooseRandomActivity() {
     final _random = new Random();
     setState(() {
-      activity = _activities[_random.nextInt(_activities.length)].title;
+      Activity selectedActivity = _activities[_random.nextInt(_activities.length)];
+      activity = selectedActivity.title;
+      picture = selectedActivity.picture;
     });
 
   }
@@ -73,25 +76,29 @@ class _MyHomePageState extends State<MyHomePage> {
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: new Column(
-          // Column is also layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug paint" (press "p" in the console where you ran
-          // "flutter run", or select "Toggle Debug Paint" from the Flutter tool
-          // window in IntelliJ) to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
+
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            new Image.asset(picture),
             new Text(
               'Try this out:',
+              style: new TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30.0,
+                  fontFamily: 'Roboto',
+                  color: Colors.purple,
+              ),
             ),
-            new Text(activity)
+            new Padding(
+                padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 19.0),
+                child: new Text(
+                    activity,
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.blue,
+                    ),
+                )
+            )
           ],
         ),
       ),
@@ -107,22 +114,26 @@ class _MyHomePageState extends State<MyHomePage> {
 class Activity {
   String title;
   int frequency;
-  Activity(String title, int frequency) {
+  String picture;
+  Activity(String title, int frequency, String picture) {
     this.title = title;
     this.frequency = frequency;
+    this.picture = picture;
   }
 }
 
 List<Activity> _activities = <Activity>[
-  Activity('Sun bathing', 0),
-  Activity('Call an old friend', 0),
-  Activity('Bake something', 0),
-  Activity('Re-read your favorite book', 0),
-  Activity('Try out a new cusine', 0),
-  Activity('Say hi to your neighbor', 0),
-  Activity('Go to the spa', 0),
-  Activity('Donate some clothes to goodwill', 0),
-  Activity('Volunteer at an animal shelter', 0),
-  Activity('Go on a scavenger hunt', 0),
-  Activity('Come up with a new recipe for dish or drink', 0)
+  Activity('Sun bathing', 0, 'assets/sunbathing.jpg'),
+  Activity('Call an old friend', 0, 'assets/call_friend.jpg'),
+  Activity('Bake something', 0, 'assets/bake.jpg'),
+  Activity('Re-read your favorite book', 0, 'assets/read.jpg'),
+  Activity('Try out a new cusine', 0, 'assets/new_cuisine.gif'),
+  Activity('Say hi to your neighbor', 0, 'assets/greet_n.jpg'),
+  Activity('Go to the spa', 0, 'assets/spa.jpg'),
+  Activity('Donate some clothes to goodwill', 0, 'assets/donate_clothes.jpg'),
+  Activity('Volunteer at an animal shelter', 0, 'assets/shelter.jpg'),
+  Activity('Go on a scavenger hunt', 0, 'assets/hunt.jpg'),
+  Activity('Come up with a new recipe for dish or drink', 0, 'assets/new_dish.png'),
+  Activity('Take a nap', 0, 'assets/nap.jpg'),
+
 ];
