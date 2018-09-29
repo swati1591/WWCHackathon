@@ -75,32 +75,43 @@ class _MyHomePageState extends State<MyHomePage> {
       body: new Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: new Column(
-
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Image.asset(picture),
-            new Text(
-              'Try this out:',
-              style: new TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30.0,
-                  fontFamily: 'Roboto',
-                  color: Colors.purple,
+        child: new Card(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new Padding(
+                padding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 3.0),
+                child:new Image.asset(
+                    picture
+                ),
               ),
-            ),
-            new Padding(
-                padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 19.0),
-                child: new Text(
+
+//            new Text(
+//              'Try this out:',
+//              style: new TextStyle(
+//                  fontWeight: FontWeight.bold,
+//                  fontSize: 30.0,
+//                  fontFamily: 'Roboto',
+//                  color: Colors.purple,
+//              ),
+//            ),
+              new Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 19.0),
+                  child: new Text(
                     activity,
                     style: TextStyle(
                       fontSize: 15.0,
                       color: Colors.blue,
                     ),
-                )
-            )
-          ],
+                  )
+              )
+            ],
+          ),
         ),
+
+
+
       ),
       floatingActionButton: new FloatingActionButton(
         onPressed: chooseRandomActivity,
@@ -135,5 +146,10 @@ List<Activity> _activities = <Activity>[
   Activity('Go on a scavenger hunt', 0, 'assets/hunt.jpg'),
   Activity('Come up with a new recipe for dish or drink', 0, 'assets/new_dish.png'),
   Activity('Take a nap', 0, 'assets/nap.jpg'),
+  Activity('Take a bath', 0, 'assets/bath.jpg'),
+  Activity('Try some yoga', 0, 'assets/yoga.png'),
+  Activity('Admire some flowers', 0, 'assets/flowers.png'),
+  Activity('Ride a unicorn', 0, 'assets/unicorn.png'),
+
 
 ];
