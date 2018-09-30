@@ -7,11 +7,13 @@ List<Category> myInterests =[];
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  List<CheckboxListTile> myInterests = [];
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Flutter Demo',
       theme: new ThemeData(
+        scaffoldBackgroundColor: Color.fromRGBO(202, 219, 247, 1.0),
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -48,7 +50,28 @@ class SuggestActivity extends StatefulWidget {
 class _SuggestActivityState extends State<SuggestActivity> {
 
   String activity = "Click the button to generate a random activity";
+  Offset cardOffset = const Offset(0.0, 0.0);
+  Offset dragStart;
+  Offset dragPosition;
+
   String picture = 'assets/press_button.gif';
+
+  void _onPartStart(DragStartDetails details) {
+    dragStart = details.globalPosition;
+  }
+
+  void _onPartUpdate(DragUpdateDetails details) {
+    setState(() {
+      dragPosition = details.globalPosition;
+      cardOffset = dragPosition - dragStart;
+    });
+  }
+
+  void _onPartEnd(DragEndDetails details) {
+    dragStart = null;
+    dragPosition = null;
+    cardOffset = const Offset(0.0, 0.0);
+  }
 
   void chooseRandomActivity() {
     final _random = new Random();
@@ -79,47 +102,57 @@ class _SuggestActivityState extends State<SuggestActivity> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return new Scaffold(
-      appBar: new AppBar(
-        // Here we take the value from the SuggestActivity object that was created by
+        appBar: new AppBar(
+        // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: new Text(widget.title),
-      ),
-      body: new Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: new Column(
-
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Image.asset(picture),
-            new Text(
-              'Try this out:',
-              style: new TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30.0,
-                  fontFamily: 'Roboto',
-                  color: Colors.purple,
-              ),
+            title: new Text(widget.title),
             ),
-            new Padding(
-                padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 19.0),
-                child: new Text(
-                    activity,
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.blue,
-                    ),
-                )
+        body: Transform(
+            transform: Matrix4.translationValues(cardOffset.dx, cardOffset.dy, 0.0),
+            child: new Center(
+            // Center is a layout widget. It takes a single child and positions it
+            // in the middle of the parent.
+                child: new GestureDetector(
+                    onPanStart: _onPartStart,
+                    onPanUpdate: _onPartUpdate,
+                    onPanEnd: _onPartEnd,
+
+                  child: Padding(padding: EdgeInsets.only(bottom: 100.0),
+                      child: new Card(
+
+                        child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              new Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 3.0),
+                                  child:new Image.asset(
+                                      picture
+                                  ),
+                                  ),
+                              new Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 19.0),
+                                  child: new Text(
+                                      activity,
+                                      style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.blue,
+                                      ),
+                                  )
+                              )
+                            ],
+                        ),
+                      ),
+                  )
+                            )
             )
-          ],
         ),
-      ),
-      floatingActionButton: new FloatingActionButton(
+        floatingActionButton: new FloatingActionButton(
         onPressed: chooseRandomActivity,
         tooltip: 'Display random activity',
         child: new Icon(Icons.android),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        ), // This trailing comma makes auto-formatting nicer for build methods.
+        );
   }
 }
 
@@ -310,5 +343,15 @@ List<Activity> _activities = <Activity>[
   Activity('Go on a scavenger hunt', 0, 'assets/hunt.jpg', Category.PUZZLES),
   Activity('Come up with a new recipe for dish or drink', 0, 'assets/new_dish.png', Category.COOKING),
   Activity('Take a nap', 0, 'assets/nap.jpg', Category.RELAX),
+  Activity('Take a bath', 0, 'assets/bath.jpg', Category.RELAX),
+  Activity('Try some yoga', 0, 'assets/yoga.png', Category.RELAX),
+  Activity('Admire some flowers', 0, 'assets/flowers.png', Category.RELAX),
+  Activity('Ride a unicorn', 0, 'assets/unicorn.png', Category.RELAX),
+  Activity('Learn a new coding language', 0, 'assets/coding.jpg', Category.READING),
+  Activity('Dance party in your house', 0, 'assets/dancing.jpg', Category.SOCIAL),
+  Activity('Play hide and seek with a friend', 0, 'assets/hiding.jpg', Category.SOCIAL),
+  Activity('Build a box fort', 0, 'assets/box_fort.jpg', Category.RELAX),
+  Activity('Dust off your guitar', 0, 'assets/guitar.jpg', Category.RELAX),
+
 
 ];
