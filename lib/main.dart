@@ -9,8 +9,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-        title: 'Flutter Demo',
-        theme: new ThemeData(
+      title: 'Flutter Demo',
+      theme: new ThemeData(
+        scaffoldBackgroundColor: Color.fromRGBO(202, 219, 247, 1.0),
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -84,7 +85,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPanStart: _onPartStart,
                     onPanUpdate: _onPartUpdate,
                     onPanEnd: _onPartEnd,
-                    child: new Card(
+
+                  child: Padding(padding: EdgeInsets.only(bottom: 100.0),
+                      child: new Card(
 
                         child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -110,6 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                         ),
                     ),
+                ),
 
 
 
@@ -169,6 +173,11 @@ List<Activity> _activities = <Activity>[
   Activity('Try some yoga', 0, 'assets/yoga.png'),
   Activity('Admire some flowers', 0, 'assets/flowers.png'),
   Activity('Ride a unicorn', 0, 'assets/unicorn.png'),
+  Activity('Learn a new coding language', 0, 'assets/coding.jpg'),
+  Activity('Dance party in your house', 0, 'assets/dancing.jpg'),
+  Activity('Play hide and seek with a friend', 0, 'assets/hiding.jpg'),
+  Activity('Build a box fort', 0, 'assets/box_fort.jpg'),
+  Activity('Dust off your guitar', 0, 'assets/guitar.jpg'),
 
 
 ];
