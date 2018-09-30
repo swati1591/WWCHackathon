@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'Flutter Demo',
       theme: new ThemeData(
+        scaffoldBackgroundColor: Color.fromRGBO(202, 219, 247, 1.0),
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -75,17 +76,21 @@ class _MyHomePageState extends State<MyHomePage> {
       body: new Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: new Card(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new Padding(
-                padding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 3.0),
-                child:new Image.asset(
-                    picture
-                ),
-              ),
+        child: Padding(padding: EdgeInsets.only(bottom: 100.0),
+          child: new Card(
+            child: Column(
+              mainAxisSize: MainAxisSize.min ,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                new Padding(
+                  padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(5.0), topRight: Radius.circular(5.0)),
+                      child: new Image.asset(picture),
+                  ),
+                  ),
+
+
 
 //            new Text(
 //              'Try this out:',
@@ -96,17 +101,18 @@ class _MyHomePageState extends State<MyHomePage> {
 //                  color: Colors.purple,
 //              ),
 //            ),
-              new Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 19.0),
-                  child: new Text(
-                    activity,
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.blue,
-                    ),
-                  )
-              )
-            ],
+                new Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 19.0),
+                    child: new Text(
+                      activity,
+                      style: TextStyle(
+                        fontSize: 25.0,
+                        color: Colors.blue,
+                      ),
+                    )
+                )
+              ],
+            ),
           ),
         ),
 
@@ -150,6 +156,11 @@ List<Activity> _activities = <Activity>[
   Activity('Try some yoga', 0, 'assets/yoga.png'),
   Activity('Admire some flowers', 0, 'assets/flowers.png'),
   Activity('Ride a unicorn', 0, 'assets/unicorn.png'),
+  Activity('Learn a new coding language', 0, 'assets/coding.jpg'),
+  Activity('Dance party in your house', 0, 'assets/dancing.jpg'),
+  Activity('Play hide and seek with a friend', 0, 'assets/hiding.jpg'),
+  Activity('Build a box fort', 0, 'assets/box_fort.jpg'),
+  Activity('Dust off your guitar', 0, 'assets/guitar.jpg'),
 
 
 ];
