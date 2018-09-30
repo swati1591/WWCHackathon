@@ -20,10 +20,10 @@ class MyApp extends StatelessWidget {
         // "hot reload" (press "r" in the console where you ran "flutter run",
         // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
         // counter didn't reset back to zero; the application is not restarted.
-        primarySwatch: Colors.deepPurple,
-      ),
-      home: new MyHomePage(title: 'Try something new'),
-    );
+            primarySwatch: Colors.deepPurple,
+            ),
+        home: new MyHomePage(title: 'Try something new'),
+        );
   }
 }
 
@@ -46,7 +46,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  
+  Offset cardOffset = const Offset(0.0, 0.0);
+  Offset dragStart;
+  Offset dragPosition;
+
   List<CheckboxListTile> myInterests = [];
   String activity = "Click the hot tub to generate a random activity";
   String picture = 'assets/press_button.gif';
@@ -68,63 +71,77 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return new Scaffold(
-      appBar: new AppBar(
+        appBar: new AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: new Text(widget.title),
-      ),
-      body: new Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Padding(padding: EdgeInsets.only(bottom: 100.0),
-          child: new Card(
-            child: Column(
-              mainAxisSize: MainAxisSize.min ,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                new Padding(
-                  padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(5.0), topRight: Radius.circular(5.0)),
-                      child: new Image.asset(picture),
-                  ),
-                  ),
-
-
-
-//            new Text(
-//              'Try this out:',
-//              style: new TextStyle(
-//                  fontWeight: FontWeight.bold,
-//                  fontSize: 30.0,
-//                  fontFamily: 'Roboto',
-//                  color: Colors.purple,
-//              ),
-//            ),
-                new Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 19.0),
-                    child: new Text(
-                      activity,
-                      style: TextStyle(
-                        fontSize: 25.0,
-                        color: Colors.blue,
-                      ),
-                    )
-                )
-              ],
+            title: new Text(widget.title),
             ),
-          ),
-        ),
+        body: Transform(
+            transform: Matrix4.translationValues(cardOffset.dx, cardOffset.dy, 0.0),
+            child: new Center(
+            // Center is a layout widget. It takes a single child and positions it
+            // in the middle of the parent.
+                child: new GestureDetector(
+                    onPanStart: _onPartStart,
+                    onPanUpdate: _onPartUpdate,
+                    onPanEnd: _onPartEnd,
+
+                  child: Padding(padding: EdgeInsets.only(bottom: 100.0),
+                      child: new Card(
+
+                        child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              new Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 3.0),
+                                  child:new Image.asset(
+                                      picture
+                                  ),
+                                  ),
+                              new Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 19.0),
+                                  child: new Text(
+                                      activity,
+                                      style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.blue,
+                                          ),
+                                      )
+                              )
+                            ],
+                            ),
+                        ),
+                    ),
+                ),
 
 
 
-      ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: chooseRandomActivity,
-        tooltip: 'Display random activity',
-        child: new Icon(Icons.hot_tub),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+                ),
+            ),
+        floatingActionButton: new FloatingActionButton(
+            onPressed: chooseRandomActivity,
+            tooltip: 'Display random activity',
+            child: new Icon(Icons.hot_tub),
+            ), // This trailing comma makes auto-formatting nicer for build methods.
+        );
+  }
+
+  void _onPartStart(DragStartDetails details) {
+    dragStart = details.globalPosition;
+  }
+
+  void _onPartUpdate(DragUpdateDetails details) {
+    setState(() {
+      dragPosition = details.globalPosition;
+      cardOffset = dragPosition - dragStart;
+    });
+  }
+
+  void _onPartEnd(DragEndDetails details) {
+    dragStart = null;
+    dragPosition = null;
+    cardOffset = const Offset(0.0, 0.0);
   }
 }
 
